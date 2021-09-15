@@ -1,4 +1,4 @@
-package mainerpackages
+package com
 
 import (
 	"fmt"
