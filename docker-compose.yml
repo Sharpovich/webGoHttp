@@ -1,0 +1,42 @@
+version: "3"
+
+volumes:
+  postgres:
+
+networks:
+  postgres:
+    driver: bridge
+
+services:
+  web:
+    build: .
+    ports:
+      - "${HTTP_PORT:-8000}:8000"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+    depends_on:
+      - db
+    links:
+      - db:db
+    networks:
+      - postgres
+    restart: always
+  db:
+    image: postgres:11
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    env_file:
+      - .env
+    networks:
+      - postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+    volumes:
+      - postgres:/data/postgres
