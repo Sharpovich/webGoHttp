@@ -2,7 +2,7 @@ package com
 
 import (
 	"net/http"
-	"sharpovich/com/apps"
+	"project/com/apps"
 )
 
 func Routers(port string) {
