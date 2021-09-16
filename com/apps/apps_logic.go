@@ -1,8 +1,8 @@
-package com
+package apps
 
 import (
-	"html/template"
 	"net/http"
+	"text/template"
 )
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
@@ -26,12 +26,4 @@ func RegComplete(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles("static/templates/reg_complete.html")
 	tmpl.Execute(w, data)
 
-}
-
-func Routers(port string) {
-	http.HandleFunc("/", HomePage)
-	http.HandleFunc("/auth", GetUser)
-	http.HandleFunc("/reg_complete", RegComplete)
-
-	http.ListenAndServe(port, nil)
 }
