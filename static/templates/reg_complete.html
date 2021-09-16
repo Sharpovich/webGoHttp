@@ -5,8 +5,16 @@
         <title>Вывод</title>
     </head>
     <body>
-        <h2>Пользователь {{ .Name}}</h2>
-        <h3>Которому {{.Age}} лет</h3>
-        <h4>Успешно зарегистрировался на сайте</h4>
+        <table>
+            <thead><th>Id</th><th>Firstname</th><th>Lastname</th><th>City</th></thead>
+            {{range . }}
+            <tr>
+                <td>{{.Id}}</td>
+                <td>{{.Firstname}}</td>
+                <td>{{.Lastname}}</td>
+                <td>{{.City}}</td>
+            </tr>
+            {{end}}
+        </table>
     </body>
 </html>

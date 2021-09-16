@@ -9,11 +9,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type Product struct {
-	Id      int
-	Model   string
-	Company string
-	Price   int
+type Users struct {
+	Id        int
+	Firstname string
+	Lastname  string
+	City      string
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -24,23 +24,23 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query("select * from Products")
+	rows, err := db.Query("select * from Users")
 	if err != nil {
 		panic(err)
 	}
 	defer rows.Close()
-	products := []Product{}
+	users := []Users{}
 
 	for rows.Next() {
-		p := Product{}
-		err := rows.Scan(&p.Id, &p.Model, &p.Company, &p.Price)
+		p := Users{}
+		err := rows.Scan(&p.Id, &p.Firstname, &p.Lastname, &p.City)
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
-		products = append(products, p)
+		users = append(users, p)
 	}
 
-	tmpl, _ := template.ParseFiles("static/templates/array_users.html")
-	tmpl.Execute(w, products)
+	tmpl, _ := template.ParseFiles("static/templates/reg_complete.html")
+	tmpl.Execute(w, users)
 }
