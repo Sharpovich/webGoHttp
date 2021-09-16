@@ -1,7 +1,9 @@
 package main
 
-import mp "project/com"
+import (
+	"project/com"
+)
 
 func main() {
-	mp.Routers(":8080")
+	com.Routers(":8080")
 }
