@@ -8,15 +8,16 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func GetUser(w http.ResponseWriter, r *http.Request) {
+func GetAuth(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "static/templates/reg.html")
-	firstname := r.URL.Query().Get("firstname")
-	lastname := r.URL.Query().Get("lastname")
-	city := r.URL.Query().Get("city")
+}
 
-	fmt.Println(firstname)
-	fmt.Println(lastname)
-	fmt.Println(city)
+func GetUser(w http.ResponseWriter, r *http.Request) {
+	firstname := r.FormValue("firstname")
+	lastname := r.FormValue("lastname")
+	city := r.FormValue("city")
+	fmt.Fprintf(w, "Имя: %s Фамилия: %s Город: %s", firstname, lastname, city)
+
 	connStr := "user=admin password=admin dbname=project sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
