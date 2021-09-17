@@ -41,6 +41,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		users = append(users, p)
 	}
 
-	tmpl, _ := template.ParseFiles("static/templates/reg_complete.html")
+	tmpl, _ := template.ParseFiles("static/templates/list_users.html")
 	tmpl.Execute(w, users)
 }

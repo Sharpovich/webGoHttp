@@ -9,7 +9,7 @@ import (
 )
 
 func GetAuth(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "static/templates/reg.html")
+	http.ServeFile(w, r, "static/templates/authentication.html")
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
