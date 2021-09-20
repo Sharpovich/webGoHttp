@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 
 	_ "github.com/lib/pq"
@@ -41,6 +42,10 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		users = append(users, p)
 	}
 
-	tmpl, _ := template.ParseFiles("static/templates/list_users.html")
+	tmpl, err := template.ParseFiles("static/templates/list_users.html")
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+	}
 	tmpl.Execute(w, users)
 }
