@@ -1,14 +1,41 @@
 package apps
 
 import (
+	"html/template"
+	"log"
 	"net/http"
 )
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
+	files := []string{
+		"static/templates/home.page.tmpl",
+		"static/templates/base.layout.tmpl",
+		"static/templates/footer.partial.tmpl",
+		"static/templates/header.tmpl",
+	}
+
+	filesNotFound := []string{
+		"static/templates/not_found.tmpl",
+		"static/templates/base.layout.tmpl",
+		"static/templates/footer.partial.tmpl",
+		"static/templates/header.tmpl",
+	}
 
 	if r.URL.Path != "/" {
-		http.ServeFile(w, r, "static/templates/not_found.html")
+		nf, _ := template.ParseFiles(filesNotFound...)
+		nf.Execute(w, nil)
 		return
 	}
-	http.ServeFile(w, r, "static/templates/index.html")
+
+	ts, err := template.ParseFiles(files...)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+		return
+	}
+	err = ts.Execute(w, nil)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+	}
 }

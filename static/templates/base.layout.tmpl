@@ -1,0 +1,17 @@
+{{define "base"}}
+<!doctype html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <title>{{template "title" .}}</title>
+    </head>
+    
+    <body>
+        {{template "header" .}}
+        <content>
+            {{template "content" .}}
+        </content>
+        {{template "footer" .}}
+    </body>
+</html>
+{{end}}
