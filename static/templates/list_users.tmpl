@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Вывод</title>
-    </head>
-    <body>
-        <table>
+{{template "base" .}}
+ 
+{{define "title"}}Список пользователей{{end}}
+ 
+{{define "content"}}
+<table>
             <thead><th>Id</th><th>Firstname</th><th>Lastname</th><th>City</th></thead>
             {{range . }}
             <tr>
@@ -16,5 +14,4 @@
             </tr>
             {{end}}
         </table>
-    </body>
-</html>
+{{end}}

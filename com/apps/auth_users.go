@@ -3,13 +3,33 @@ package apps
 import (
 	"database/sql"
 	"fmt"
+	"html/template"
+	"log"
 	"net/http"
 
 	_ "github.com/lib/pq"
 )
 
 func GetAuth(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "static/templates/authentication.html")
+
+	files := []string{
+		"static/templates/authentication.tmpl",
+		"static/templates/base.tmpl",
+		"static/templates/footer.tmpl",
+		"static/templates/header.tmpl",
+	}
+
+	ts, err := template.ParseFiles(files...)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+		return
+	}
+	err = ts.Execute(w, nil)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+	}
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {

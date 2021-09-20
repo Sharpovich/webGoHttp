@@ -9,15 +9,14 @@ import (
 func HomePage(w http.ResponseWriter, r *http.Request) {
 	files := []string{
 		"static/templates/home.page.tmpl",
-		"static/templates/base.layout.tmpl",
-		"static/templates/footer.partial.tmpl",
+		"static/templates/base.tmpl",
+		"static/templates/footer.tmpl",
 		"static/templates/header.tmpl",
 	}
-
 	filesNotFound := []string{
 		"static/templates/not_found.tmpl",
-		"static/templates/base.layout.tmpl",
-		"static/templates/footer.partial.tmpl",
+		"static/templates/base.tmpl",
+		"static/templates/footer.tmpl",
 		"static/templates/header.tmpl",
 	}
 

@@ -42,10 +42,20 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		users = append(users, p)
 	}
 
-	tmpl, err := template.ParseFiles("static/templates/list_users.html")
+	files := []string{
+		"static/templates/list_users.tmpl",
+		"static/templates/base.tmpl",
+		"static/templates/footer.tmpl",
+		"static/templates/header.tmpl",
+	}
+	tmpl, err := template.ParseFiles(files...)
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 	}
-	tmpl.Execute(w, users)
+	err = tmpl.Execute(w, users)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+	}
 }
