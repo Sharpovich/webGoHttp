@@ -12,6 +12,7 @@ func Routers(host, port string) {
 	http.HandleFunc("/", apps.HomePage)
 	// auth
 	http.HandleFunc("/auth", apps.GetAuth)
+	http.HandleFunc("/auth/", apps.GetAuth)
 	http.HandleFunc("/auth/postform_authentication", apps.GetUser)
 	// review list users
 	http.HandleFunc("/users", apps.IndexHandler)

@@ -19,7 +19,6 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		"static/templates/footer.tmpl",
 		"static/templates/header.tmpl",
 	}
-
 	if r.URL.Path != "/" {
 		nf, _ := template.ParseFiles(filesNotFound...)
 		nf.Execute(w, nil)
