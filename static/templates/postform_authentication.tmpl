@@ -1,0 +1,10 @@
+{{template "base" .}}
+ 
+{{define "title"}}Список пользователей{{end}}
+ 
+{{define "content"}}
+<h1>Успешная регистрация</h1>
+{{range .}}
+{{.Firstname}} {{.Lastname}}, город {{.City}} успешно записан в БД
+{{end}}
+{{end}}

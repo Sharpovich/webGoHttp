@@ -2,7 +2,6 @@ package apps
 
 import (
 	"database/sql"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -11,14 +10,12 @@ import (
 )
 
 func GetAuth(w http.ResponseWriter, r *http.Request) {
-
 	files := []string{
 		"static/templates/authentication.tmpl",
 		"static/templates/base.tmpl",
 		"static/templates/footer.tmpl",
 		"static/templates/header.tmpl",
 	}
-
 	ts, err := template.ParseFiles(files...)
 	if err != nil {
 		log.Println(err.Error())
@@ -32,11 +29,36 @@ func GetAuth(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+type User struct {
+	Firstname string
+	Lastname  string
+	City      string
+}
+
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	firstname := r.FormValue("firstname")
 	lastname := r.FormValue("lastname")
 	city := r.FormValue("city")
-	fmt.Fprintf(w, "Имя: %s Фамилия: %s Город: %s", firstname, lastname, city)
+
+	files := []string{
+		"static/templates/postform_authentication.tmpl",
+		"static/templates/base.tmpl",
+		"static/templates/footer.tmpl",
+		"static/templates/header.tmpl",
+	}
+	users := []User{}
+	p := User{Firstname: firstname, Lastname: lastname, City: city}
+	users = append(users, p)
+	tmpl, err := template.ParseFiles(files...)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+	}
+	err = tmpl.Execute(w, users)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+	}
 
 	connStr := "user=admin password=admin dbname=project sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
