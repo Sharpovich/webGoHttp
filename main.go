@@ -1,9 +1,20 @@
 package main
 
 import (
+	"log"
+	"os"
 	"project/com"
+
+	"github.com/joho/godotenv"
 )
 
+func init() {
+	// loads values from .env into the system
+	if err := godotenv.Load(); err != nil {
+		log.Print("No .env file found")
+	}
+}
+
 func main() {
-	com.Routers("127.0.0.1", ":8080")
+	com.Routers(os.Getenv("WEB_HOST"), os.Getenv("WEB_PORT"))
 }

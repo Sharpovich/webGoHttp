@@ -9,9 +9,6 @@ import (
 
 func Routers(host, port string) {
 	route := http.NewServeMux()
-	// StaticFile
-	fileServer := http.FileServer(http.Dir("./static/"))
-	route.Handle("/static/", http.StripPrefix("/static", fileServer))
 	// home page
 	route.HandleFunc("/", apps.HomePage)
 	// auth

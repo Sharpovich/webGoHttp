@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 
 	_ "github.com/lib/pq"
 )
@@ -18,8 +19,11 @@ type Users struct {
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	connStr := "user=admin password=admin dbname=project sslmode=disable"
-	db, err := sql.Open("postgres", connStr)
+	connStr := "user=" + os.Getenv("DB_USER") +
+		" password=" + os.Getenv("DB_PASSWORD") +
+		" dbname=" + os.Getenv("DB_NAME") +
+		" sslmode=disable"
+	db, err := sql.Open(os.Getenv("DB_CONF"), connStr)
 	if err != nil {
 		panic(err)
 	}

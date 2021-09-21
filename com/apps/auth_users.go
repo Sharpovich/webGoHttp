@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 
 	_ "github.com/lib/pq"
 )
@@ -21,6 +22,10 @@ func GetAuth(w http.ResponseWriter, r *http.Request) {
 		"static/templates/base.tmpl",
 		"static/templates/footer.tmpl",
 		"static/templates/header.tmpl",
+	}
+	if r.URL.Path != "/auth/" && r.URL.Path != "/auth" {
+		http.Redirect(w, r, "/auth", http.StatusFound)
+		return
 	}
 	if r.URL.Path == "/auth/" {
 		http.Redirect(w, r, "/auth", http.StatusFound)
@@ -55,8 +60,11 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	users = append(users, p)
 
 	if firstname != "" && lastname != "" && city != "" {
-		connStr := "user=admin password=admin dbname=project sslmode=disable"
-		db, err := sql.Open("postgres", connStr)
+		connStr := "user=" + os.Getenv("DB_USER") +
+			" password=" + os.Getenv("DB_PASSWORD") +
+			" dbname=" + os.Getenv("DB_NAME") +
+			" sslmode=disable"
+		db, err := sql.Open(os.Getenv("DB_CONF"), connStr)
 		if err != nil {
 			panic(err)
 		}
