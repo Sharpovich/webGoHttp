@@ -4,9 +4,15 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 )
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
+	logInfo := log.New(os.Stdout, "INFO:\t",
+		log.Ldate|log.Ltime)
+	logError := log.New(os.Stderr, "ERROR:\t",
+		log.Ldate|log.Ltime|log.Lshortfile)
+
 	files := []string{
 		"static/templates/home.page.html",
 		"static/templates/base.html",
@@ -27,13 +33,14 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 
 	ts, err := template.ParseFiles(files...)
 	if err != nil {
-		log.Println(err.Error())
+		logError.Println(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 		return
 	}
 	err = ts.Execute(w, nil)
 	if err != nil {
-		log.Println(err.Error())
+		logError.Println(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 	}
+	logInfo.Printf("Page to /: %v\n", http.StatusOK)
 }
