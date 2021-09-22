@@ -6,36 +6,33 @@ import (
 	"os"
 )
 
-type Application struct {
+type application struct {
 	logError *log.Logger
 	logInfo  *log.Logger
 }
 
-func Logger() *Application {
-	logInfo := log.New(os.Stdout, "INFO:\t",
-		log.Ldate|log.Ltime)
-	logError := log.New(os.Stderr, "ERROR:\t",
-		log.Ldate|log.Ltime|log.Lshortfile)
-	app := &Application{
+func Routers(host, port string) {
+	logInfo := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	logError := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+
+	// Инициализируем новую структуру с зависимостями приложения.
+	app := &application{
 		logError: logError,
 		logInfo:  logInfo,
 	}
-	return app
-}
-func Routers(host, port string) {
 	route := http.NewServeMux()
 	// home page
-	route.HandleFunc("/", HomePage)
+	route.HandleFunc("/", app.HomePage)
 	// auth
-	route.HandleFunc("/auth", GetAuth)
-	route.HandleFunc("/auth/", GetAuth)
-	route.HandleFunc("/auth/postform_authentication", GetUser)
+	route.HandleFunc("/auth", app.GetAuth)
+	route.HandleFunc("/auth/", app.GetAuth)
+	route.HandleFunc("/auth/postform_authentication", app.GetUser)
 	// review list users
-	route.HandleFunc("/users", IndexHandler)
+	route.HandleFunc("/users", app.IndexHandler)
 
-	Logger().logInfo.Printf("Connection web-server on %v%v\n", host, port)
+	logInfo.Printf("Connection web-server on %v%v\n", host, port)
 	err := http.ListenAndServe(port, route)
 	if err != nil {
-		Logger().logError.Fatal(err)
+		logError.Fatal(err)
 	}
 }

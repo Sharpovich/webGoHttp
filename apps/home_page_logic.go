@@ -2,17 +2,10 @@ package apps
 
 import (
 	"html/template"
-	"log"
 	"net/http"
-	"os"
 )
 
-func HomePage(w http.ResponseWriter, r *http.Request) {
-	logInfo := log.New(os.Stdout, "INFO:\t",
-		log.Ldate|log.Ltime)
-	logError := log.New(os.Stderr, "ERROR:\t",
-		log.Ldate|log.Ltime|log.Lshortfile)
-
+func (app *application) HomePage(w http.ResponseWriter, r *http.Request) {
 	files := []string{
 		"static/templates/home.page.html",
 		"static/templates/base.html",
@@ -33,14 +26,14 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 
 	ts, err := template.ParseFiles(files...)
 	if err != nil {
-		logError.Println(err.Error())
+		app.logError.Println(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 		return
 	}
 	err = ts.Execute(w, nil)
 	if err != nil {
-		logError.Println(err.Error())
+		app.logError.Println(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 	}
-	logInfo.Printf("Page to /: %v\n", http.StatusOK)
+	app.logInfo.Printf("Page to /: %v\n", http.StatusOK)
 }

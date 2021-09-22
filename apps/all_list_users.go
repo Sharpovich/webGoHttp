@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -19,12 +18,7 @@ type Users struct {
 	City      string
 }
 
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	logInfo := log.New(os.Stdout, "INFO:\t",
-		log.Ldate|log.Ltime)
-	logError := log.New(os.Stderr, "ERROR:\t",
-		log.Ldate|log.Ltime|log.Lshortfile)
-
+func (app *application) IndexHandler(w http.ResponseWriter, r *http.Request) {
 	connStr := "user=" + os.Getenv("DB_USER") +
 		" password=" + os.Getenv("DB_PASSWORD") +
 		" dbname=" + os.Getenv("DB_NAME") +
@@ -34,7 +28,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	logInfo.Printf("Connection opened to  %v\n",
+	app.logInfo.Printf("Connection opened to  %v\n",
 		strings.ToUpper(os.Getenv("DB_NAME")))
 	defer db.Close()
 
@@ -54,9 +48,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		users = append(users, p)
 	}
-	logInfo.Printf("Data from database %v loaded\n",
+	app.logInfo.Printf("Data from database %v loaded\n",
 		strings.ToUpper(os.Getenv("DB_NAME")))
-	logInfo.Printf("Connection closed to  %v\n",
+	app.logInfo.Printf("Connection closed to  %v\n",
 		strings.ToUpper(os.Getenv("DB_NAME")))
 	files := []string{
 		"static/templates/list_users.html",
@@ -66,13 +60,13 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	tmpl, err := template.ParseFiles(files...)
 	if err != nil {
-		logError.Println(err.Error())
+		app.logError.Println(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 	}
 	err = tmpl.Execute(w, users)
 	if err != nil {
-		logError.Println(err.Error())
+		app.logError.Println(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 	}
-	defer logInfo.Printf("Page to /users: %v\n", http.StatusOK)
+	defer app.logInfo.Printf("Page to /users: %v\n", http.StatusOK)
 }
