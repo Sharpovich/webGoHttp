@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"os"
-	"project/com"
+	"project/apps"
 
 	"github.com/joho/godotenv"
 )
@@ -16,5 +16,5 @@ func init() {
 }
 
 func main() {
-	com.Routers(os.Getenv("WEB_HOST"), os.Getenv("WEB_PORT"))
+	apps.Routers(os.Getenv("WEB_HOST"), os.Getenv("WEB_PORT"))
 }
