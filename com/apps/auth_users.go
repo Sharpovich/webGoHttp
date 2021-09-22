@@ -18,10 +18,10 @@ type User struct {
 
 func GetAuth(w http.ResponseWriter, r *http.Request) {
 	files := []string{
-		"static/templates/authentication.tmpl",
-		"static/templates/base.tmpl",
-		"static/templates/footer.tmpl",
-		"static/templates/header.tmpl",
+		"static/templates/authentication.html",
+		"static/templates/base.html",
+		"static/templates/footer.html",
+		"static/templates/header.html",
 	}
 	if r.URL.Path != "/auth/" && r.URL.Path != "/auth" {
 		http.Redirect(w, r, "/auth", http.StatusFound)
@@ -50,10 +50,10 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	city := r.FormValue("city")
 
 	files := []string{
-		"static/templates/postform_authentication.tmpl",
-		"static/templates/base.tmpl",
-		"static/templates/footer.tmpl",
-		"static/templates/header.tmpl",
+		"static/templates/postform_authentication.html",
+		"static/templates/base.html",
+		"static/templates/footer.html",
+		"static/templates/header.html",
 	}
 	users := []User{}
 	p := User{Firstname: firstname, Lastname: lastname, City: city}

@@ -47,10 +47,10 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	files := []string{
-		"static/templates/list_users.tmpl",
-		"static/templates/base.tmpl",
-		"static/templates/footer.tmpl",
-		"static/templates/header.tmpl",
+		"static/templates/list_users.html",
+		"static/templates/base.html",
+		"static/templates/footer.html",
+		"static/templates/header.html",
 	}
 	tmpl, err := template.ParseFiles(files...)
 	if err != nil {

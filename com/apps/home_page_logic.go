@@ -8,16 +8,16 @@ import (
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
 	files := []string{
-		"static/templates/home.page.tmpl",
-		"static/templates/base.tmpl",
-		"static/templates/footer.tmpl",
-		"static/templates/header.tmpl",
+		"static/templates/home.page.html",
+		"static/templates/base.html",
+		"static/templates/footer.html",
+		"static/templates/header.html",
 	}
 	filesNotFound := []string{
-		"static/templates/not_found.tmpl",
-		"static/templates/base.tmpl",
-		"static/templates/footer.tmpl",
-		"static/templates/header.tmpl",
+		"static/templates/not_found.html",
+		"static/templates/base.html",
+		"static/templates/footer.html",
+		"static/templates/header.html",
 	}
 	if r.URL.Path != "/" {
 		nf, _ := template.ParseFiles(filesNotFound...)
