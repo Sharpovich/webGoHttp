@@ -21,6 +21,9 @@ func Routers(host, port string) {
 		logInfo:  logInfo,
 	}
 	route := http.NewServeMux()
+	// static files
+	fs := http.FileServer(http.Dir("./static"))
+	route.Handle("/static/", http.StripPrefix("/static/", fs))
 	// home page
 	route.HandleFunc("/", app.HomePage)
 	// auth
