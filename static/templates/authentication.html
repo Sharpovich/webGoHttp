@@ -3,14 +3,19 @@
 {{define "title"}}Ввод новых данных в базу данных{{end}}
 
 {{define "content"}}
-<h2>Ввод данных</h2>
-<form method="POST" action="/auth/postform_authentication">
-    <label>Имя</label><br>
-    <input type="text" name="firstname" /><br><br>
-    <label>Фамилия</label><br>
-    <input type="text" name="lastname" /><br><br>
-    <label>Город</label><br>
-    <input type="text" name="city" /><br><br>
-    <input type="submit" value="Отправить" />
-</form>
+<div class="splash-container">
+    <div class="splash">
+        <p class="splash-subhead">
+            <form method="POST" action="/auth/postform_authentication">
+                <label>Имя</label><br>
+                <input type="text" name="firstname" /><br><br>
+                <label>Фамилия</label><br>
+                <input type="text" name="lastname" /><br><br>
+                <label>Город</label><br>
+                <input type="text" name="city" /><br><br>
+                <input type="submit" value="Отправить" class="pure-button pure-button-primary">
+            </form>
+        </p>
+    </div>
+</div>
 {{end}}

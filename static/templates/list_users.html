@@ -3,20 +3,27 @@
 {{define "title"}}Список пользователей{{end}}
 
 {{define "content"}}
-<table>
-    <thead>
-        <th>Id</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>City</th>
-    </thead>
-    {{range . }}
-    <tr>
-        <td>{{.Id}}</td>
-        <td>{{.Firstname}}</td>
-        <td>{{.Lastname}}</td>
-        <td>{{.City}}</td>
-    </tr>
-    {{end}}
-</table>
+<div class="splash-container">
+    <div class="splash">
+        <p class="splash-subhead">
+            <table>
+                <thead>
+                    <th>Id</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>City</th>
+                </thead>
+                {{range . }}
+                <tr>
+                    <td>{{.Id}}</td>
+                    <td>{{.Firstname}}</td>
+                    <td>{{.Lastname}}</td>
+                    <td>{{.City}}</td>
+                </tr>
+                {{end}}
+            </table>
+        </p>
+    </div>
+</div>
+
 {{end}}
