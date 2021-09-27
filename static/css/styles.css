@@ -84,6 +84,45 @@ a.pure-button-primary {
     font-size: 120%;
 }
 
+/*
+ * -- SIDENAV STYLES --
+ * I want to customize how my .pure-menu looks at the top of the page
+ */
+
+.sidenav {
+    /* height: 94%; */
+    width: 400px;
+    position: fixed;
+    z-index: 1;
+    top: 68px;
+    left: 0;
+    bottom: 60px;
+    background-color: rgb(0, 0, 0);
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
 
 /*
  * -- MENU STYLES --
@@ -135,7 +174,7 @@ a.pure-button-primary {
 
 
 .splash-container {
-    background: #6b8f8f3a;
+    background: #979ef83f;
     z-index: 3;
     overflow: auto;
     /* The following styles are required for the "scroll-over" effect */
@@ -278,7 +317,6 @@ a.pure-button-primary {
     .l-box-lrg {
         border: none;
     }
-
 }
 
 /*
@@ -291,5 +329,17 @@ a.pure-button-primary {
     /* We increase the header font size even more */
     .splash-head {
         font-size: 300%;
+    }
+
+}
+
+
+/* боковая колонка исчезает 
+    display: none; */
+
+
+@media (max-width: 767px) {
+    .sidenav {
+        display: none;
     }
 }

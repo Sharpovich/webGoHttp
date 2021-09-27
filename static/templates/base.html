@@ -17,6 +17,10 @@
 
 <body>
     {{template "header" .}}
+    {{block "sidebar" .}}
+    <div class="sidenav">
+    </div>
+    {{end}}
     <content>
         {{template "content" .}}
     </content>
