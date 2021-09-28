@@ -1,34 +1,40 @@
-version: '3.1'
+version: "3.1"
 
 volumes:
   pg_project:
 
+networks:
+  pg_project:
+    driver: bridge
+
 services:
-#   web:
-#     build: .
-#     ports:
-#       - "${HTTP_PORT:-8000}:8000"
-#     environment:
-#       POSTGRES_USER: ${POSTGRES_USER}
-#       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-#       POSTGRES_DB: ${POSTGRES_DB}
-#       POSTGRES_HOST: ${POSTGRES_HOST}
-#       POSTGRES_PORT: ${POSTGRES_PORT}
-#     depends_on:
-#       - db
-#     links:
-#       - db:db
-#     networks:
-#       - postgres
-#     restart: always
+  web:
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
+    depends_on:
+      - pg_db
+    links:
+      - pg_db:pg_db
+    networks:
+      - pg_project
+    restart: always
   pg_db:
     image: postgres
-    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    networks:
+      - pg_project
     environment:
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_USER=admin
-      - POSTGRES_DB=project
+      - DB_PASSWORD=admin
+      - DB_USER=admin
+      - DB_NAME=project
     volumes:
       - pg_project:/var/lib/postgresql/data
-    ports:
-      - ${POSTGRES_PORT:-5432}:5432
