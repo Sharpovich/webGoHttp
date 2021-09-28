@@ -11,23 +11,24 @@ services:
   web:
     build: .
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       DB_PORT: ${DB_PORT}
     depends_on:
-      - pg_db
+      - db
     links:
-      - pg_db:pg_db
+      - db:db
     networks:
       - pg_project
     restart: always
-  pg_db:
+  db:
     image: postgres
+    container_name: db
     ports:
-      - 5432:5432
+      - "5432:5432"
     env_file:
       - .env
     networks:
@@ -38,3 +39,5 @@ services:
       - DB_NAME=project
     volumes:
       - pg_project:/var/lib/postgresql/data
+
+

@@ -2,6 +2,7 @@ package apps
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"net/http"
 	"os"
@@ -63,10 +64,12 @@ func (app *application) GetUser(w http.ResponseWriter, r *http.Request) {
 	users = append(users, p)
 
 	if firstname != "" && lastname != "" && city != "" {
-		connStr := "user=" + os.Getenv("DB_USER") +
-			" password=" + os.Getenv("DB_PASSWORD") +
-			" dbname=" + os.Getenv("DB_NAME") +
-			" sslmode=disable"
+		connStr := fmt.Sprintf("postgresql://%s:%s@%s/%s?sslmode=disable",
+			os.Getenv("DB_USER"),
+			os.Getenv("DB_PASSWORD"),
+			"db",
+			os.Getenv("DB_NAME"),
+		)
 		db, err := sql.Open(os.Getenv("DB_CONF"), connStr)
 		if err != nil {
 			panic(err)
