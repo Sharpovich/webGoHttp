@@ -9,8 +9,8 @@
  * Most of these are inherited from Base, but I want to change a few.
  */
 body {
-    line-height: 1.7em;
-    color: #7f8c8d;
+    line-height: 1.4em;
+    color: #000000;
     font-size: 13px;
 }
 
@@ -91,12 +91,13 @@ a.pure-button-primary {
 
 .sidenav {
     /* height: 94%; */
+    border-radius: 10px;
     width: 400px;
     position: fixed;
     z-index: 1;
     top: 68px;
     left: 0;
-    bottom: 60px;
+    bottom: 56px;
     background-color: rgb(0, 0, 0);
     overflow-x: hidden;
     padding-top: 20px;
@@ -263,11 +264,13 @@ a.pure-button-primary {
 /* This is the class used for the dark-background areas. */
 .ribbon {
     background: #000000;
-    color: #aaa;
+    color: rgb(255, 255, 255);
 }
 
 /* This is the class used for the footer */
 .footer {
+    color: #ffffff;
+    border-radius: 10px;
     background: #111;
     position: fixed;
     bottom: 0;
