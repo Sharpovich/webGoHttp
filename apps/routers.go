@@ -1,14 +1,33 @@
 package apps
 
 import (
+	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 )
 
 type application struct {
 	logError *log.Logger
 	logInfo  *log.Logger
+}
+
+func (app *application) ConnDB() *sql.DB {
+	connStr := fmt.Sprintf("postgresql://%s:%s@%s/%s?sslmode=disable",
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_CONTAINER_NAME"),
+		os.Getenv("DB_NAME"),
+	)
+	db, err := sql.Open(os.Getenv("DB_CONF"), connStr)
+	if err != nil {
+		panic(err)
+	}
+	app.logInfo.Printf("Connection opened to  %v\n",
+		strings.ToUpper(os.Getenv("DB_NAME")))
+	return db
 }
 
 func Routers(host, port string) {

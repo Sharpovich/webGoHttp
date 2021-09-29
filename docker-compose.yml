@@ -34,9 +34,9 @@ services:
     networks:
       - pg_project
     environment:
-      - DB_PASSWORD=admin
-      - DB_USER=admin
-      - DB_NAME=project
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_USER=${DB_USER}
+      - DB_NAME=${DB_NAME}
     volumes:
       - pg_project:/var/lib/postgresql/data
 

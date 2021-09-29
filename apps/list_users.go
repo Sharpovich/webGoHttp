@@ -1,7 +1,6 @@
 package apps
 
 import (
-	"database/sql"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -19,21 +18,8 @@ type Users struct {
 }
 
 func (app *application) IndexHandler(w http.ResponseWriter, r *http.Request) {
-
-	connStr := fmt.Sprintf("postgresql://%s:%s@%s/%s?sslmode=disable",
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASSWORD"),
-		"db",
-		os.Getenv("DB_NAME"),
-	)
-	db, err := sql.Open(os.Getenv("DB_CONF"), connStr)
-	if err != nil {
-		panic(err)
-	}
-	app.logInfo.Printf("Connection opened to  %v\n",
-		strings.ToUpper(os.Getenv("DB_NAME")))
+	db := app.ConnDB()
 	defer db.Close()
-
 	rows, err := db.Query("select * from Users")
 	if err != nil {
 		panic(err)
